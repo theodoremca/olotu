@@ -53,11 +53,11 @@ Function DeleteRows(ByVal firstYear As Integer, ByVal lastYear As Integer, ByVal
     Dim condition1 As Boolean
     Dim condition2 As Boolean
     
-    lastRow = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    lastRow = ActiveWorkbook.ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
     
     For i = lastRow To firstRow Step -1
         cellString = "A" & i
-        value = ActiveSheet.range(cellString).value
+        value = ActiveWorkbook.ActiveSheet.range(cellString).value
         If IsDate(value) Then
         yearNumber = CInt(Format(value, "YYYY"))
 
@@ -106,7 +106,7 @@ Function CopyRangeBetweenWorkbooks(ByVal source As String, ByVal sourceSheet As 
     
     ' Save and close the destination workbook
     destinationWorkbook.Save
-    sourceWorkbook.Close
+    ' sourceWorkbook.Close
 End Function
 
 
@@ -140,6 +140,7 @@ Sub Create_Sheet_1()
 End Sub
 
 Sub Amodel()
+
     Dim source As String
     Dim sourceSheet As String
     Dim destination As String
@@ -149,18 +150,67 @@ Sub Amodel()
     Dim sheetNames33 As Variant
     sheetNames33 = Array("CCCMA", "MIROC", "MPI", "MOHC")
     Dim sheetName33 As Variant
+    Dim sheetModelName As Variant
+    sourceSheet = "Lagos"
     For Each sheetName33 In sheetNames33
     Sheets.Add(After:=Sheets(Sheets.Count)).Name = sheetName33
     destinationSheet = sheetName33
     source = destinationSheet & ".xlsx"
-    sourceSheet = "Lagos"
     destination = sourceSheet & ".xlsx"
-    
     range = "A1:H1147"
-    
     CopyRangeBetweenWorkbooks source, sourceSheet, destination, destinationSheet, range
     Next sheetName33
     
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+    ws.Activate
+    DeleteRows 2040, 2099, 1
+    Next sheetName33
+
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+    ws.Activate
+    DeleteRows 2040, 2099, 1
+    ws.range("B8:C8").Select
+    ws.range(Selection, Selection.End(xlDown)).Select
+    Selection.Delete Shift:=xlToLeft
+    Next sheetName33
+
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+    Dim year1 As String
+    Dim year2 As String
+    Dim rg As String
+    
+    rg = "A8:F367"
+    year1 = "2040"
+    year2 = "2069"
+
+    sheetModelName = sheetName33 & "_45_" & year1 & "_" & year2
+        Set wsd = Workbooks(sourceSheet).Sheets.Add(After:=Workbooks(sourceSheet).Sheets(Workbooks(sourceSheet).Sheets.Count))
+        wsd.Name = sheetModelName
+    ws.range(rg).Copy wsd.range("A1:H1147")
+
+    wsd.Rows("1:2").Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+    Workbooks(sourceSheet).Sheets("Sheet1").range("A1:D2").Copy wsd.range("A1")
+
+
+    
+    rg = "A368:F726"
+    year1 = "2041"
+    year2 = "2099"
+    
+    sheetModelName = sheetName33 & "_45_" & year1 & "_" & year2
+        Set wsd = Workbooks(sourceSheet).Sheets.Add(After:=Workbooks(sourceSheet).Sheets(Workbooks(sourceSheet).Sheets.Count))
+        wsd.Name = sheetModelName
+    ws.range(rg).Copy wsd.range("A1:H1147")
+
+    wsd.Rows("1:2").Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+    Workbooks(sourceSheet).Sheets("Sheet1").range("A1:D2").Copy wsd.range("A1")
+
+    Next sheetName33
 
 End Sub
+
+
 
