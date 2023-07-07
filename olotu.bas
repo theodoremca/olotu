@@ -119,7 +119,7 @@ Sub Future()
     
     destinationSheet = "CCCMA"
     source = destinationSheet & ".xlsx"
-    sourceSheet = "Lagos"
+    sourceSheet = "Ondo"
     destination = sourceSheet & ".xlsx"
     
     range = "A1:H1147"
@@ -151,7 +151,7 @@ Sub Amodel()
     sheetNames33 = Array("CCCMA", "MIROC", "MPI", "MOHC")
     Dim sheetName33 As Variant
     Dim sheetModelName As Variant
-    sourceSheet = "Lagos"
+    sourceSheet = "Ogun"
     For Each sheetName33 In sheetNames33
     Sheets.Add(After:=Sheets(Sheets.Count)).Name = sheetName33
     destinationSheet = sheetName33
@@ -161,11 +161,6 @@ Sub Amodel()
     CopyRangeBetweenWorkbooks source, sourceSheet, destination, destinationSheet, range
     Next sheetName33
     
-    For Each sheetName33 In sheetNames33
-    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
-    ws.Activate
-    DeleteRows 2040, 2099, 1
-    Next sheetName33
 
     For Each sheetName33 In sheetNames33
     Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
@@ -197,7 +192,7 @@ Sub Amodel()
 
     
     rg = "A368:F726"
-    year1 = "2041"
+    year1 = "2070"
     year2 = "2099"
     
     sheetModelName = sheetName33 & "_45_" & year1 & "_" & year2
@@ -211,6 +206,216 @@ Sub Amodel()
     Next sheetName33
 
 End Sub
+
+
+
+Sub model2()
+
+    Dim source As String
+    Dim sourceSheet As String
+    Dim destination As String
+    Dim destinationSheet As String
+    Dim range As String
+    Dim state As String
+    
+    Dim sheetNames33 As Variant
+    sheetNames33 = Array("CCCMA", "MIROC", "MPI", "MOHC")
+    Dim sheetName33 As Variant
+    Dim sheetModelName As Variant
+    state = "Oyo"
+    sourceSheet = state
+
+    For Each sheetName33 In sheetNames33
+    Worksheets(sheetName33).Delete
+    Next sheetName33
+    For Each sheetName33 In sheetNames33
+    Sheets.Add(After:=Sheets(Sheets.Count)).Name = sheetName33
+    destinationSheet = sheetName33
+    source = destinationSheet & ".xlsx"
+    destination = sourceSheet & ".xlsx"
+    range = "A1:H1147"
+    CopyRangeBetweenWorkbooks source, sourceSheet, destination, destinationSheet, range
+    Next sheetName33
+    
+
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+    ws.Activate
+    DeleteRows 2040, 2099, 1
+    ws.range("B8:C8").Select
+    ws.range(Selection, Selection.End(xlDown)).Select
+    Selection.Delete Shift:=xlToLeft
+    Next sheetName33
+
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+    Dim year1 As String
+    Dim year2 As String
+    Dim rg As String
+    
+    rg = "A8:F367"
+    year1 = "2040"
+    year2 = "2069"
+
+    sheetModelName = sheetName33 & "_85_" & year1 & "_" & year2
+        Set wsd = Workbooks(sourceSheet).Sheets.Add(After:=Workbooks(sourceSheet).Sheets(Workbooks(sourceSheet).Sheets.Count))
+        wsd.Name = sheetModelName
+    ws.range(rg).Copy wsd.range("A1:H1147")
+
+    wsd.Rows("1:2").Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+    Workbooks(sourceSheet).Sheets("Sheet1").range("A1:D2").Copy wsd.range("A1")
+
+
+    
+    rg = "A368:F726"
+    year1 = "2070"
+    year2 = "2099"
+    
+    sheetModelName = sheetName33 & "_85_" & year1 & "_" & year2
+        Set wsd = Workbooks(sourceSheet).Sheets.Add(After:=Workbooks(sourceSheet).Sheets(Workbooks(sourceSheet).Sheets.Count))
+        wsd.Name = sheetModelName
+    ws.range(rg).Copy wsd.range("A1:H1147")
+
+    wsd.Rows("1:2").Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+    Workbooks(sourceSheet).Sheets("Sheet1").range("A1:D2").Copy wsd.range("A1")
+
+    Next sheetName33
+
+End Sub
+
+
+
+
+Sub model22()
+
+    Dim source As String
+    Dim sourceSheet As String
+    Dim destination As String
+    Dim destinationSheet As String
+    Dim range As String
+    Dim state As String
+    
+    Dim sheetNames33 As Variant
+    sheetNames33 = Array("CCCMA", "MIROC", "MPI", "MOHC")
+    Dim sheetName33 As Variant
+    Dim sheetModelName As Variant
+    state = "Ekiti"
+    sourceSheet = state
+    Dim year1 As String
+    Dim year2 As String
+    year1 = 1981
+    year2 = 2010
+
+    For Each sheetName33 In sheetNames33
+    Worksheets(sheetName33).Delete
+    Next sheetName33
+    For Each sheetName33 In sheetNames33
+    Sheets.Add(After:=Sheets(Sheets.Count)).Name = sheetName33
+    destinationSheet = sheetName33
+    source = destinationSheet & ".xlsx"
+    destination = sourceSheet & ".xlsx"
+    range = "A1:H1147"
+    CopyRangeBetweenWorkbooks source, sourceSheet, destination, destinationSheet, range
+    Next sheetName33
+    
+
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+    ws.Activate
+    DeleteRows year1, year2, 1
+    ws.range("B8:C8").Select
+    ws.range(Selection, Selection.End(xlDown)).Select
+    Selection.Delete Shift:=xlToLeft
+    Next sheetName33
+
+    For Each sheetName33 In sheetNames33
+    Set ws = Workbooks(sourceSheet).Sheets(sheetName33) ' Change to the desired sheet name
+
+    Dim rg As String
+    
+    rg = "A8:F367"
+
+
+    sheetModelName = sheetName33 & "_HIST_" & year1 & "_" & year2
+        Set wsd = Workbooks(sourceSheet).Sheets.Add(After:=Workbooks(sourceSheet).Sheets(Workbooks(sourceSheet).Sheets.Count))
+        wsd.Name = sheetModelName
+    ws.range(rg).Copy wsd.range("A1:H1147")
+
+    wsd.Rows("1:2").Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+    Workbooks(sourceSheet).Sheets("Sheet1").range("A1:D2").Copy wsd.range("A1")
+
+
+    Next sheetName33
+
+End Sub
+
+
+
+Sub modelLast()
+
+    Dim source As String
+    Dim sourceSheet As String
+    Dim destination As String
+    Dim destinationSheet As String
+    Dim range As String
+    Dim state As String
+    
+    Dim sheetNames33 As Variant
+    sheetNames33 = Array("CCCMA", "MIROC", "MPI", "MOHC")
+    Dim sheetName33 As Variant
+    Dim sheetModelName As Variant
+    state = "Ekiti"
+    sourceSheet = state
+    Dim year1 As String
+    Dim year2 As String
+    year1 = 1981
+    year2 = 2010
+
+    For Each sheetName33 In sheetNames33
+    Worksheets(sheetName33).Delete
+    Next sheetName33
+  
+    Sheets.Add(After:=Sheets(Sheets.Count)).Name = "CRUD"
+    destinationSheet = "CRUD"
+    source = destinationSheet & ".xlsx"
+    destination = sourceSheet & ".xlsx"
+    range = "A1:H1447"
+    CopyRangeBetweenWorkbooks source, sourceSheet, destination, destinationSheet, range
+
+    
+
+ 
+    Set ws = Workbooks(sourceSheet).Sheets("CRUD") ' Change to the desired sheet name
+    ws.Activate
+    DeleteRows year1, year2, 1
+    ws.range("B8:C8").Select
+    ws.range(Selection, Selection.End(xlDown)).Select
+    Selection.Delete Shift:=xlToLeft
+   
+
+
+    Set ws = Workbooks(sourceSheet).Sheets("CRUD") ' Change to the desired sheet name
+
+    Dim rg As String
+    
+    rg = "A8:F600"
+
+
+    sheetModelName = "CRUD_" & year1 & "_" & year2
+        Set wsd = Workbooks(sourceSheet).Sheets.Add(After:=Workbooks(sourceSheet).Sheets(Workbooks(sourceSheet).Sheets.Count))
+        wsd.Name = sheetModelName
+    ws.range(rg).Copy wsd.range("A1:H1447")
+
+    wsd.Rows("1:2").Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+    Workbooks(sourceSheet).Sheets("Sheet1").range("A1:D2").Copy wsd.range("A1")
+
+    Worksheets("CRUD").Delete
+    Worksheets("Sheet1").Delete
+
+End Sub
+
+
+
 
 
 
